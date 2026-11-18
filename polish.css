@@ -1,0 +1,193 @@
+/* Final polish for all Growlyze HubSpot pages.
+   Loaded last, so it refines the existing design without replacing it. */
+
+/* Type: crisper rendering, tighter display headings, relaxed body copy */
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+h1{letter-spacing:-.035em}
+h2{letter-spacing:-.025em;line-height:1.08}
+h3{letter-spacing:-.015em}
+p{text-wrap:pretty}
+
+/* Spacing: a little more air between sections */
+.section{padding-top:clamp(72px,9vw,118px);padding-bottom:clamp(72px,9vw,118px)}
+
+/* Buttons: soft press and lift */
+.btn{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,background-color .3s ease,color .3s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(135,81,181,.22)}
+.btn:active{transform:translateY(0) scale(.98);transition-duration:.12s}
+
+/* Cards: gentle lift on hover */
+.case,.why,.tier{transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease,border-color .3s ease}
+.case:hover,.tier:hover{transform:translateY(-3px);box-shadow:0 18px 44px rgba(20,8,39,.14)}
+
+/* Case study popup */
+.modal{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background-color .4s ease}
+.modal.open .dialog{animation:dialogIn .5s cubic-bezier(.22,1,.36,1) both}
+.dialog{border-radius:20px;box-shadow:0 30px 90px rgba(10,4,20,.38)}
+.dialog-head{padding-top:22px}
+.case-close{width:40px;height:40px;border-radius:999px;border:0;background:rgba(20,8,39,.06);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background-color .25s ease,transform .25s cubic-bezier(.22,1,.36,1)}
+.case-close:hover{background:rgba(20,8,39,.12)}
+.case-close:active{transform:scale(.92)}
+.case-close:focus:not(:focus-visible){outline:none}
+.case-close:focus-visible{outline:2px solid rgba(135,81,181,.5);outline-offset:3px}
+.close{transition:background-color .25s ease}
+.close:hover{background:rgba(20,8,39,.06)}
+[class*="case-modal"] p{line-height:1.65}
+[class*="case-modal"] h3,[class*="case-modal"] h4{margin-bottom:8px}
+
+@keyframes dialogIn{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+
+/* Motion preference: keep the polish, drop the movement */
+@media(prefers-reduced-motion:reduce){
+  .btn,.case,.tier,.why,.case-close,.close,.modal,.modal .dialog{transition:none!important;animation:none!important}
+  .btn:hover,.case:hover,.tier:hover{transform:none}
+}
+
+/* Floating nav: a rounded pill with a border on all sides.
+   Hides when scrolling down and returns when scrolling up or at the top. */
+.topbar{position:fixed;top:12px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:1180px;border:1px solid rgba(245,240,230,.14);border-radius:999px;background:rgba(20,8,39,.72);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:0 10px 40px rgba(0,0,0,.25);transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .4s ease;z-index:60}
+.topbar .wrap{height:64px;padding-left:20px;padding-right:10px}
+.topbar .btn{border-radius:999px}
+.topbar:focus-within{transform:translateX(-50%);opacity:1;pointer-events:auto}
+/* Leave room below the floating nav on desktop */
+@media(min-width:981px){.hero{padding-top:82px!important}}
+
+/* Anchor scroll alignment:
+   Sections have their own internal padding, so their top edge should align flush with the viewport top (Y=0).
+   This ensures clicking nav anchors (Results, Why, What you get, Pricing, FAQ) scrolls cleanly
+   without peeking any content or notes from the previous section. */
+html{scroll-padding-top:0!important}
+section[id],.section[id]{scroll-margin-top:0!important}
+:not(section):not(.section)[id]{scroll-margin-top:96px}
+
+/* FAQ: no purple focus box on questions; left column stays in place while the questions scroll */
+.faq summary:focus,.faq summary:focus-visible{outline:none;box-shadow:none}
+.faq-grid>div:first-child{position:sticky;top:110px;align-self:start}
+@media(max-width:900px){.faq-grid>div:first-child{position:static}}
+
+/* Remove scroll-hide: the floating nav stays visible */
+/* Rounded corners on all card sides */
+.case,.tier,.why,.scope-branches>div,.scope-details article,.sys-node,.official-cert{border-radius:20px!important}
+.case-close,.close{border-radius:999px}
+.dialog{border-radius:24px;overflow:auto}
+
+/* Case study popup: rounded on all sides, no visible scrollbar, tighter padding so it fits */
+.case-dialog{border-radius:24px!important;overflow:auto;scrollbar-width:none;-ms-overflow-style:none}
+.case-dialog::-webkit-scrollbar{display:none}
+.case-modal-content{padding:34px 36px!important}
+.case-modal-section{margin:18px 0!important}
+.case-modal-note{margin:18px 0!important}
+
+/* Nav pill: one solid colour everywhere (matches the grey-purple bar), so it doesn't turn dark over the hero */
+.topbar{background:rgba(88,80,106,.97)!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+
+/* Shared request form */
+#form-modal {
+  width: min(680px, calc(100% - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  overscroll-behavior: contain;
+  scroll-padding-top: 64px;
+}
+#form-modal::backdrop { background: rgba(10, 4, 20, .68); backdrop-filter: blur(10px); }
+#form-modal .dialog-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--paper);
+}
+#form-modal .close { flex: none; display: grid; place-items: center; width: 44px; height: 44px; }
+#form-modal .hs-form-embed { padding: 0 8px 8px; }
+#form-modal .summary-bar { margin: 0 8px 8px; }
+#form-modal iframe { display: block; width: 100%; border: 0; border-radius: 8px; }
+
+/* Why Growlyze: bento layout (dark feature card spans two columns, lavender and white cards) */
+@media(min-width:981px){
+  .why-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:20px!important}
+  .why.feature{grid-column:span 2}
+}
+.why{background:#fffdf8;border:1px solid #e0d5e7;border-radius:20px;padding:30px;display:flex;flex-direction:column;gap:12px}
+.why .num{font-size:12px;font-weight:700;color:#8354a4}
+.why.ai{background:#ece4f7;border-color:#ece4f7}
+.why.feature{background:#140827;border-color:#140827;color:#f5f0e6}
+.why.feature h3{color:#f5f0e6}
+.why.feature p{color:#c5b8d4}
+.why.feature .num{color:#c3a0ff}
+.why.feature blockquote{margin:16px 0 0;padding-left:16px;border-left:2px solid #9a57ff;color:#e4d4ff;font-weight:600}
+.why.feature{padding:38px 40px}
+
+/* Content width: aligned to the floating nav pill (1180px) on desktop */
+@media(min-width:981px){
+  .wrap{max-width:none!important;width:min(calc(100% - 32px),1180px)!important;padding-left:0!important;padding-right:0!important;margin-left:auto!important;margin-right:auto!important}
+  .topbar .wrap{width:auto!important}
+  .topbar .wrap{max-width:none!important;padding-left:20px!important;padding-right:10px!important}
+}
+
+/* How it works: five steps on one line, dark promise strip */
+#process .steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px;list-style:none;padding:0;margin:0 0 56px;position:relative}
+#process .steps::before{content:"";position:absolute;left:27px;right:27px;top:27px;height:2px;background:#d7c6ec;z-index:0}
+#process .step{position:relative;z-index:1;padding:0}
+#process .step .n{width:54px;height:54px;border-radius:50%;background:#9a57ff;color:#140827;border:2px solid #140827;display:grid;place-items:center;font-weight:800;font-size:15px;margin-bottom:26px}
+#process .step:last-child .n{background:#b58cff}
+#process .step h3{font-size:1.3rem;margin:0 0 12px}
+#process .step p{font-size:1.02rem;line-height:1.6;color:#5d5270;margin:0 0 18px}
+#process .step .t{display:flex;flex-direction:column;gap:6px;font-size:.92rem;color:#6f6184}
+#process .step .t b{color:#140827}
+#process .promise{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:#140827;color:#f5f0e6;border-radius:20px;overflow:hidden}
+#process .promise>div{padding:30px 32px;border-left:1px solid #2e1f47}
+#process .promise>div:first-child{border-left:0}
+#process .promise h3{color:#f5f0e6;font-size:1.2rem;margin:0 0 10px}
+#process .promise p{color:#c5b8d4;font-size:.98rem;line-height:1.6;margin:0}
+#process .timeline-note{font-size:.86rem;color:#8a7aa0;margin:18px 0 0}
+@media(max-width:900px){
+  #process .steps{grid-template-columns:1fr;gap:36px}
+  #process .steps::before{display:none}
+  #process .promise{grid-template-columns:1fr}
+  #process .promise>div{border-left:0;border-top:1px solid #2e1f47}
+  #process .promise>div:first-child{border-top:0}
+}
+#process .step h3{font-size:1.45rem}
+#process .step p{font-size:1.1rem}
+#process .step .t{font-size:1rem}
+#process .promise h3{font-size:1.3rem}
+#process .promise p{font-size:1.02rem}
+/* Remove the purple top bar on process steps (scroll-reveal shadow) */
+#process .steps>li,#process .steps>li.seen{box-shadow:none!important}
+/* Plan note under "Hire an admin...": remove the purple left line */
+.client-time{border-left:0!important}
+
+/* Onboarding comparison heading: first sentence stays on one line on desktop */
+@media(min-width:641px){.nowrap-line{white-space:nowrap}}
+
+/* Onboarding "different kind" heading: second line in the brand orange */
+.orange-line{color:#f55809}
+
+/* Hero path links ("Starting fresh?" / "Already on HubSpot?"): keep both on one line on desktop */
+@media(min-width:641px){.path-links{display:flex;flex-wrap:nowrap;gap:12px}.path-links a{white-space:nowrap}}
+
+/* Why Growlyze cards: match the card design (stacked dark card, bordered white cards, even gaps) */
+#why .why-grid{gap:20px}
+#why .why{background:#fffdf8;border:1px solid #e0d5e7;border-radius:20px;padding:26px 26px 28px;display:flex;flex-direction:column;gap:12px}
+#why .why.ai{background:#ece4f7;border-color:#ece4f7}
+#why .why.feature{grid-column:span 2;background:#140827;border-color:#140827;color:#f5f0e6;padding:38px 40px;display:flex;flex-direction:column;justify-content:flex-start}
+#why .why.feature p{max-width:60ch}
+#why .why.feature blockquote{margin-top:18px}
+
+/* Process circles (implementation): same purple, white numbers, and no overlap on phones */
+#process .step .n,#process .step:last-child .n{background:#9a57ff!important;color:#fff!important;border-color:#140827!important}
+@media(max-width:900px){#process .step .n{position:relative!important;left:auto!important;top:auto!important;display:flex!important;margin:0 0 14px!important;width:44px;height:44px}#process .step{padding-top:0}}
+
+/* Why migrations go wrong: dark background (#140827) with light heading text */
+#risks{background:#140827!important}
+#risks .section-head h2{color:#F5F0E6!important}
+#risks .section-head p{color:rgba(245,240,230,.75)!important}
+#risks .eyebrow{color:#C3A0FF!important}
+
+/* Nav bar corners: rounded corners like the buttons, not a full pill */
+.topbar{border-radius:16px!important}
+.topbar .btn{border-radius:12px!important}
