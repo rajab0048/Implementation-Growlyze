@@ -1619,7 +1619,7 @@ $("#price-list").addEventListener("click", e => {
 bindSeg($("#pr-tier"), v => { pr.tier = v; state.tier = v; priceUsed(); renderPricing(); });
 bindSeg($("#pr-track"), v => { pr.track = v; priceUsed(); renderPricing(); });
 
-if(CONFIG.calendarEmbedUrl) $("#cal").innerHTML = `<p class="calendar-fallback"><a href="${CONFIG.calendarUrl}" target="_blank" rel="noopener">Open booking calendar in a new tab \u2197</a></p><iframe src="${CONFIG.calendarEmbedUrl}" title="Book your free HubSpot health check" allow="payment" scrolling="no" id="xNcrZ08etA4pCGItEIWf_1794403643449" loading="lazy"></iframe>`;
+if(CONFIG.calendarEmbedUrl) $("#cal").innerHTML = `<p class="calendar-fallback"><a href="${CONFIG.calendarUrl}" target="_blank" rel="noopener"></a></p><iframe src="${CONFIG.calendarEmbedUrl}" title="Book your free HubSpot health check" allow="payment" scrolling="no" id="xNcrZ08etA4pCGItEIWf_1794403643449" loading="lazy"></iframe>`;
 $("#year").textContent = new Date().getFullYear();
 $$(".js-phone").forEach(a => a.addEventListener("click", () => track("phone_click")));
 
